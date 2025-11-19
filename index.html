@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AI Daydreaming Detector — Prototype</title>
+  <link rel="stylesheet" href="style.css" />
+  <!-- TensorFlow.js -->
+  <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.12.0/dist/tf.min.js"></script>
+  <!-- MediaPipe Face Mesh -->
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+</head>
+<body>
+  <header>
+    <h1>AI Daydream / Focus Detector (Prototype)</h1>
+    <p>Collect samples → Train → Live detection & onset alerts</p>
+  </header>
+
+  <main>
+    <div class="left">
+      <video id="webcam" autoplay playsinline muted></video>
+      <canvas id="overlay"></canvas>
+    </div>
+
+    <div class="right">
+      <section class="panel">
+        <h2>Recording Controls</h2>
+        <div class="btn-row">
+          <button id="recordFocus">Record Focus (label)</button>
+          <button id="recordDaydream">Record Daydream (label)</button>
+        </div>
+        <div class="small">
+          <label>Sample duration (s): <input id="sampleDuration" type="number" min="1" value="5"></label>
+        </div>
+        <div class="btn-row">
+          <button id="stopRecording">Stop</button>
+          <button id="downloadData">Download Dataset (JSON)</button>
+          <input id="uploadData" type="file" accept="application/json">
+        </div>
+        <p id="recordStatus" class="status">No recording</p>
+      </section>
+
+      <section class="panel">
+        <h2>Model</h2>
+        <div class="btn-row">
+          <button id="trainBtn">Train Model</button>
+          <button id="saveModelBtn">Save Model</button>
+          <input id="loadModel" type="file" accept=".json,.bin">
+        </div>
+        <p id="trainStatus" class="status">No model trained</p>
+      </section>
+
+      <section class="panel">
+        <h2>Live Detection</h2>
+        <div class="btn-row">
+          <button id="startDetect">Start Detection</button>
+          <button id="stopDetect">Stop Detection</button>
+        </div>
+        <p id="liveStatus" class="status">Idle</p>
+        <div class="metrics">
+          <div>Label: <span id="detLabel">—</span></div>
+          <div>Daydream Prob: <span id="dayProb">—</span></div>
+          <div>Blink Rate (per min): <span id="blinkRate">—</span></div>
+          <div>Gaze Stability: <span id="gazeVar">—</span></div>
+          <div>Head Roll (deg): <span id="headRoll">—</span></div>
+        </div>
+        <p id="onsetAlert" class="alert"></p>
+      </section>
+
+      <section class="panel small">
+        <h2>How to use</h2>
+        <ol>
+          <li>Allow camera access.</li>
+          <li>Record several short labeled samples for both states (focus / daydream).</li>
+          <li>Train the model in-browser.</li>
+          <li>Start live detection; the system shows early onset alerts.</li>
+        </ol>
+      </section>
+    </div>
+  </main>
+
+
+
+  <footer>
+    Prototype - by Shrenik Gupta, Mehak Bali, Niladari Sarkar, Rachit Sharma, Gunpreet Kaur and Srija Das
+  </footer>
+<audio id="beepSound" src="beep.mp3" preload="auto"></audio>
+<audio id="deepWorkSound" src="deepwork.mp3" preload="auto" loop></audio>
+  <!-- <button onclick="enableBeep()">Enable Sound</button> -->
+   <button id="unlockSound">Enable Sound</button>
+
+<button id="deepWorkBtn">Deep Work Music</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
