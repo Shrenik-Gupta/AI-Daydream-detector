@@ -563,7 +563,7 @@ if (currentLabel !== lastLabel) {
         // if probability dropped back during delay, don't beep
         // console.log("Daydreaming dropped during 3s delay; no beep.");
       }
-    }, 3000);
+    }, 30000);
   } else {
     // switched back to focused — cancel any pending beep and stop playing
     if (daydreamTimer) {
